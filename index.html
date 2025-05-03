@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Bottle Rocket Lab</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="header-controls">
+      <button id="export-btn">Export as Excel Spreadsheet</button>
+      <button id="launch-btn">Launch</button>
+      <span class="spacer"></span>
+      <button id="reset-btn">Reset</button>
+      <div class="zoom-control">
+        <label for="zoom-slider" style="font-size:1rem;">Resize UI:</label>
+        <input type="range" id="zoom-slider" min="60" max="140" value="100" step="1">
+        <output id="zoom-output" style="min-width:2.5em;">100%</output>
+      </div>
+      <button id="darkmode-toggle-btn" class="darkmode-toggle" style="margin-left:1.5em;display:flex;align-items:center;gap:0.5em;font-size:1.3em;background:none;border:none;cursor:pointer;" title="Toggle dark mode">
+        <span id="darkmode-icon" aria-label="Toggle dark mode" style="font-size:1.3em;">🌙</span>
+      </button>
+    </div>
+  </header>
+  <div class="container">
+    <aside class="sidebar resizable">
+      <!-- <div class="resize-handle"></div> -->
+      <div class="sliders">        <div class="slider-label-row">
+          <span>Launch Pressure (kPa)</span>
+          <span class="tooltip-container"><span class="info-icon" tabindex="0">ⓘ</span><span class="tooltip">The air pressure pumped into the bottle above atmospheric. Higher pressure gives more thrust, but 420 kPa is a safe maximum for plastic bottles.</span></span>
+        </div>
+        <div class="slider-input-row">
+          <input type="range" id="pressure-slider" min="220" max="420" step="5" value="345">
+          <output id="pressure-output">345</output>
+        </div>        <div class="slider-label-row">
+          <span>Bottle Volume (L)</span>
+          <span class="tooltip-container"><span class="info-icon" tabindex="0">ⓘ</span><span class="tooltip">Total internal volume of the bottle. Typical soda bottles are 2.0 L. Larger bottles hold more air and water, affecting thrust and duration.</span></span>
+        </div>
+        <div class="slider-input-row">
+          <input type="range" id="bottle-volume-slider" min="1.0" max="2.5" step="0.25" value="2.0">
+          <output id="bottle-volume-output">2.0</output>
+        </div>        <div class="slider-label-row">
+          <span>Water Fill (%)</span>
+          <span class="tooltip-container"><span class="info-icon" tabindex="0">ⓘ</span><span class="tooltip">Percent of the bottle filled with water before launch. More water increases thrust but too much reduces air for pressure. 30–40% is typical.</span></span>
+        </div>
+        <div class="slider-input-row">
+          <input type="range" id="water-fill-slider" min="0" max="90" step="5" value="35">
+          <output id="water-fill-output">35</output>
+        </div>
+        <div class="slider-label-row">
+          <span>Outer Diameter (cm)</span>
+          <span class="tooltip-container"><span class="info-icon" tabindex="0">ⓘ</span><span class="tooltip">The outside width of the bottle. Used to calculate drag.</span></span>
+        </div>
+        <div class="slider-input-row">
+          <input type="range" id="od-slider" min="4" max="15" step="0.1" value="11">
+          <output id="od-output">11</output>
+        </div>
+        <div class="slider-label-row">
+          <span>Drag Coefficient</span>
+          <span class="tooltip-container"><span class="info-icon" tabindex="0">ⓘ</span><span class="tooltip">A measure of how streamlined the rocket is. Lower values mean less air resistance. 0.3 = very sleek, 0.7 = blunt/rough.</span></span>
+        </div>
+        <div class="slider-input-row">
+          <input type="range" id="drag-slider" min="0.3" max="0.7" step="0.1" value="0.5">
+          <output id="drag-output">0.5</output>
+        </div>
+        <div class="slider-label-row">
+          <span>Rocket Dry Mass (g)</span>
+          <span class="tooltip-container"><span class="info-icon" tabindex="0">ⓘ</span><span class="tooltip">The mass of the empty rocket (bottle, fins, nose, etc.) before adding water. Heavier rockets go lower.</span></span>
+        </div>
+        <div class="slider-input-row">
+          <input type="range" id="mass-slider" min="100" max="1000" step="10" value="300">
+          <output id="mass-output">300</output>
+        </div>
+                <div id="water-air-preview" style="min-height:7.2em;"></div>        <div class="slider-label-row">
+        <div class="pressure-note">
+          <small>Important: For safety, the maximum launch pressure allowed is 345 kPa (~50 psi). The launch pad safety valve will release pressure above this.</small>
+        </div>
+      </div>
+    </aside>
+    <main>
+      <section class="run-log">
+        <div class="run-log-scroll-container">
+          <table id="run-log-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Time</th>
+                <th>Apogee (m)</th>
+                <th>Crashdown (s)</th>
+                <th>Bottle Vol (L)</th>
+                <th>Water Fill (%)</th>
+                <th>Pressure (kPa)</th>
+                <th>Outside Diameter (cm)</th>
+                <th>Drag</th>
+                <th>Mass (g)</th>
+                <th>Simulation Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="charts-metrics-flex">
+        <div class="charts-grid-2x2">
+          <div class="chart-block"><canvas id="altitude-chart" class="chart-main" width="320" height="220"></canvas><div class="chart-label">Altitude vs Time</div></div>
+          <div class="chart-block"><canvas id="velocity-chart" class="chart-main" width="320" height="220"></canvas><div class="chart-label">Velocity vs Time</div></div>
+          <div class="chart-block"><canvas id="thrust-chart" class="chart-main" width="320" height="220"></canvas><div class="chart-label">Thrust vs Time</div></div>
+          <div class="chart-block"><canvas id="accel-chart" class="chart-main" width="320" height="220"></canvas><div class="chart-label">Acceleration vs Time</div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="lib/chart.umd.js"></script>
+  <script type="module" src="js/ui.js"></script>
+  <script>
+  </script>
+</body>
+</html>
