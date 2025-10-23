@@ -6,14 +6,14 @@
   overflow-y: auto;
   background: var(--color-bg, #f7f9fa);
   margin-bottom: 0.5em;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   box-shadow: none;
 }
 .run-log-scroll-container table {
   width: 100%;
   border-collapse: collapse;
   background: var(--color-table);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 0.97rem;
 }
 .run-log-scroll-container thead th {
@@ -21,18 +21,18 @@
   top: 0;
   z-index: 2;
   background: var(--color-table);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   box-shadow: 0 2px 6px -2px #0002;
 }
 .run-log-scroll-container tbody tr:first-child {
   background: linear-gradient(90deg, #e0f2fe 0%, #f0f9ff 100%);
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   color: #1e293b;
   box-shadow: 0 2px 8px 0 #38bdf81a;
 }
 html[data-theme="dark"] .run-log-scroll-container tbody tr:first-child {
   background: linear-gradient(90deg, #045838 0%, #1e293b 100%);
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   color: #f1f5f9;
 }
 /* --- 2x2 Chart Grid Layout --- */
@@ -56,7 +56,7 @@ html[data-theme="dark"] .run-log-scroll-container tbody tr:first-child {
   align-items: stretch;
   justify-content: flex-start;
   background: var(--color-table, #fff);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 2px 8px #0001;
   border: 1px solid var(--color-border, #d1d5db);
   padding: 0.7em 0.7em 0.5em 0.7em;
@@ -148,8 +148,8 @@ html[data-theme="dark"] .run-log-scroll-container tbody tr:first-child {
   top: 120%;
   transform: translateX(-50%) translateY(0.2em);
   z-index: 10;
-  font-size: 0.93em;
-  font-weight: 400;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
   line-height: 1.35;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.18);
   pointer-events: none;
@@ -190,20 +190,21 @@ html[data-theme="dark"] .metric-thrust .metric-pair span:last-child {
   align-items: center;
   gap: 0.5em;
   margin-left: 1.5em;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
 }
 .resize-ui-label {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   margin-right: 0.3em;
 }
 
-html {
-  font-size: 65%;
-  /* Will be overridden by JS for zoom */
-}
-/* Water Bottle Rocket Lab Dashboard Styles */
+/* ========================================
+   Water Bottle Rocket Lab - Unified Styles
+   ======================================== */
+
+/* --- CSS Variables / Design Tokens --- */
 :root {
+  /* Colors - Light Theme */
   --color-bg: #f7f9fa;
   --color-sidebar: #e3e9ef;
   --color-header: #2a3a4d;
@@ -215,6 +216,39 @@ html {
   --color-text: #222;
   --color-table: #fff;
   --color-border: #d1d5db;
+
+  /* Typography */
+  --font-family: 'Inter', 'Segoe UI', 'Arial', 'Helvetica Neue', system-ui, sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font Sizes */
+  --font-size-xs: 0.93rem;
+  --font-size-sm: 0.95rem;
+  --font-size-base: 1rem;
+
+  /* Spacing */
+  --spacing-xs: 0.2em;
+  --spacing-sm: 0.5em;
+  --spacing-md: 1em;
+  --spacing-lg: 1.5em;
+  --spacing-xl: 2rem;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* Transitions */
+  --transition-fast: 0.2s;
+  --transition-smooth: 0.22s cubic-bezier(.4, 0, .2, 1);
+}
+
+html {
+  font-size: 65%;
+  /* Will be overridden by JS for zoom */
 }
 
 html[data-theme="dark"] {
@@ -262,7 +296,7 @@ html[data-theme="dark"] .sliders input[type="range"],
 html[data-theme="dark"] .slider-input-row input[type="range"] {
   accent-color: var(--color-accent);
   background: #23272b;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
 }
 html[data-theme="dark"] .sliders output,
@@ -314,7 +348,8 @@ body[data-theme="dark"] #run-log-table th {
 
 body, html {
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', 'Arial', 'Helvetica Neue', system-ui, sans-serif;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-normal);
   background: var(--color-bg);
   color: var(--color-text);
   font-feature-settings: "ss01" on, "ss02" on;
@@ -355,10 +390,11 @@ header {
 .header-controls button {
   padding: 0.6em 1.2em;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background var(--transition-fast);
 }
 .header-controls #launch-btn {
   background: var(--color-success);
@@ -408,12 +444,13 @@ header {
   padding: 0.6em 1.2em;
   margin-bottom: 0.3em;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: var(--color-accent);
   color: #fff;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background var(--transition-fast);
 }
 .controls button:hover {
   background: #2563eb;
@@ -423,7 +460,7 @@ header {
 .sliders label {
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   margin-bottom: 1em;
   gap: 0.2em;
 }
@@ -442,7 +479,7 @@ header {
   margin: 0.2em 0;
 }
 .sliders output {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   margin-left: 0.5em;
   color: var(--color-header);
 }
@@ -473,7 +510,7 @@ main {
   flex-direction: column;
   align-items: center;
   background: #fff;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 2px 8px #0001;
   border: 1px solid var(--color-border);
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
@@ -523,15 +560,15 @@ main {
 }
 .metric-table {
   background: var(--color-table);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   width: 100%;
-  font-size: 0.95rem;
+  font-size: var(--font-size-sm);
   box-shadow: 0 1px 4px #0001;
   text-align: center;
 }
 .metric-table caption {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   color: var(--color-header);
   margin-bottom: 0.2em;
 }
@@ -546,13 +583,13 @@ main {
   width: 100%;
   border-collapse: collapse;
   background: var(--color-table);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: 0 1px 4px #0001;
   font-size: 0.97rem;
 }
 #run-log-table caption {
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   color: var(--color-header);
   margin-bottom: 0.2em;
 }
@@ -570,7 +607,7 @@ main {
 .flex { display: flex; }
 .gap-1 { gap: 1em; }
 .text-center { text-align: center; }
-.bold { font-weight: bold; }
+.bold { font-weight: var(--font-weight-bold); }
 
 @media (max-width: 900px) {
   .container {
@@ -613,7 +650,7 @@ main {
   background: #e8f0fe;
   color: var(--color-accent);
   font-size: 0.95em;
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
@@ -626,7 +663,7 @@ main {
   transform: translateX(-50%);
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity var(--transition-fast);
   background: #fff;
   color: #000;
   padding: 0.5em;
@@ -651,8 +688,8 @@ main {
   gap: 0.5em;
   margin-bottom: 0.2em;
   margin-top: 0.7em;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
 }
 .slider-label-row:first-child {
   margin-top: 0;
@@ -671,7 +708,7 @@ main {
 .slider-input-row output {
   min-width: 3.2em;
   text-align: center;
-  font-weight: bold;
+  font-weight: var(--font-weight-bold);
   color: var(--color-header);
   font-size: 1em;
   background: none;

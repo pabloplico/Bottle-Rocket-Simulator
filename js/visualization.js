@@ -1,3 +1,7 @@
+// Visualization for Water Bottle Rocket Lab (Chart.js 4+)
+// Access Chart from global window object (loaded via script tag)
+const Chart = window.Chart;
+
 // Draw Velocity vs Time
 export function drawVelocityChart(ctx, chartData, darkMode = null) {
   if (!ctx) return;
