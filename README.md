@@ -174,6 +174,12 @@ lib/
 - Better nozzle modeling and bottle geometry options
 - Save/restore presets
 
+## Inspiration and references
+This project draws inspiration from prior work and educational resources:
+- Water Rocket Simulator (web) — https://waterrocketsimulator.github.io/
+- Air Command Rockets Simulator — http://www.aircommandrockets.com/sim/simulator.htm
+- NASA Glenn Bottle Rocket Simulator — https://www.grc.nasa.gov/www/k-12/rocket/BottleRocket/sim.htm
+
 ## License
 No license file is included yet. If you plan to distribute or modify this project, add a LICENSE file (e.g., MIT) at the repository root.
 
